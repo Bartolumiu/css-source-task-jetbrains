@@ -10,7 +10,12 @@
       </div>
 
       <div class="mt-auto">
-        <button class="btn-primary w-full">View Recipe</button>
+        <NuxtLink
+            :to="`/recipe/${id}`"
+            class="btn-primary w-full text-center block"
+        >
+          View Recipe
+        </NuxtLink>
       </div>
     </div>
   </div>
@@ -18,6 +23,7 @@
 
 <script setup lang="ts">
 defineProps({
+  id: Number,
   title: String,
   time: Number,
   difficulty: String,
