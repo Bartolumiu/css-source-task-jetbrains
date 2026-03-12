@@ -1,5 +1,5 @@
 <template>
-  <div v-if="recipe" class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 flex flex-col md:flex-row">
+  <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 flex flex-col md:flex-row">
     <div class="md:w-1/2">
       <img
           :src="recipe.image"
@@ -21,10 +21,6 @@
       <NuxtLink to="/" class="btn-primary text-center inline-block w-fit">Back to Recipes</NuxtLink>
     </div>
   </div>
-  <div v-else class="text-center py-12">
-    <h2 class="text-2xl font-bold text-gray-700">Recipe not found!</h2>
-    <NuxtLink to="/" class="text-primary-600 hover:underline mt-4 inline-block">Back to Recipes</NuxtLink>
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -39,4 +35,11 @@ const recipe = (!Number.isNaN(recipeId))
   ? getRecipeById(recipeId)
   : null;
 
+if (!recipe) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Recipe not found.',
+    fatal: false
+  });
+}
 </script>
