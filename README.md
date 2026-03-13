@@ -1,75 +1,52 @@
-# Nuxt Minimal Starter
+# Tracing Generated CSS Back to Source
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Setup and run instructions
 
-## Setup
+1. Clone the repository and navigate to the project directory:
 
-Make sure to install dependencies:
+    ```bash
+    git clone https://gitbub.com/Bartolumiu/css-source-task-jetbrains.git
+    cd css-source-task-jetbrains
+    ```
+   
+2. Install the dependencies:
 
-```bash
-# npm
-npm install
+    ```bash
+   pnpm install --frozen-lockfile
+    ```
 
-# pnpm
-pnpm install
+### Development
+3. Start the development server:
 
-# yarn
-yarn install
+    ```bash
+    pnpm dev
+    ```
+   
+### Production Preview
+4. Build the project for production:
+    ```bash
+    pnpm build
+    ```
+   
+5. Start the preview server:
+    ```bash
+    pnpm preview
+    ```
+   
 
-# bun
-bun install
-```
+## How CSS is transformed
 
-## Development Server
+The source (`app/assets/css/main.css`) contains Tailwind directives (`@tailwind`, `@apply`).
+During the build, Vite processes this file using PostCSS.
+The Tailwind plugin then scans the .vue files for class names, resolves the `@apply` directives, strips out the custom macros, and outputs browser-compatible CSS utility classes.
 
-Start the development server on `http://localhost:3000`:
+## Location of generated CSS and source maps
+The location varies based on the environment:
 
-```bash
-# npm
-npm run dev
+### Development
+The generated CSS is served from memory by Vite's development server.
+You can inspect the generated CSS and source maps in the browser's developer tools under the "Sources" tab.
 
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+### Production Preview
+The generated CSS output is located in the `.output/public/_nuxt/entry.(hash).css` file.
+While JavaScript source maps (`.js.map`) are successfully generated in this directory, the CSS source map is being discarded by Rollup during the build process, which is why it does not appear in the output.
